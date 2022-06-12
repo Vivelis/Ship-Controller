@@ -8,6 +8,8 @@ SerialCommand sCmd;
 
 //pin photorésistance rouge
 #define redSensorPin = A0;
+void pingHandler (const char *command);
+
 //sa variable
 int redSensorValue = 0;
 
