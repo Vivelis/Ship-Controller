@@ -1,9 +1,28 @@
-void setup() {
-  // put your setup code here, to run once:
+#include <SoftwareSerial.h>
+#include <SerialCommand.h>
+SerialCommand sCmd;
 
+void setup() {
+    Serial.begin(9600);
+    while (!Serial);
+
+    sCmd.addCommand("PING", pingHandler);
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void loop () {
+    if (Serial.available() > 0)
+        sCmd.readSerial();
+}
 
+void pingHandler (const char *command) {
+    Serial.println("PONG");
+}
+
+void echoHandler () {
+  char *arg;
+  arg = sCmd.next();
+  if (arg != NULL)
+    Serial.println(arg);
+  else
+    Serial.println("nothing to echo");
 }
