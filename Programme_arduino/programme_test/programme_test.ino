@@ -15,8 +15,29 @@ void setup() {
   Serial.begin(9600);
   //inscription du nombre de colomnes et de lignes du lcd
   lcd.begin(16, 2);
+  //------> lcd démarage
+  // clean up the screen before printing a new reply
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("   J workshop   ");
+  //écrir la seconde ligne
+  lcd.setCursor(0, 1);
+  lcd.print("================");
   while (!Serial);
+  //------> lcd connection série établie avec l'ordinateur
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("   J workshop   ");
+  lcd.setCursor(0, 1);
+  lcd.print("connect serie /");
+  //------> lcd connection avec application établie
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("   J workshop   ");
+  lcd.setCursor(0, 1);
+  lcd.print("connect app ~");
   sCmd.addCommand("PING", pingHandler);
+  
 }
 
 void loop () {
@@ -26,6 +47,12 @@ void loop () {
 
 void pingHandler (const char *command) {
   Serial.println("PONG");
+  //------> lcd connection avec application établie
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("   J workshop   ");
+  lcd.setCursor(0, 1);
+  lcd.print("connect app /");
 }
 
 void echoHandler () {
