@@ -1,21 +1,31 @@
+//initialisation librairie pour le LCD
+#include <LiquidCrystal.h>
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
 #include <SoftwareSerial.h>
 #include <SerialCommand.h>
 SerialCommand sCmd;
 
-void setup() {
-    Serial.begin(9600);
-    while (!Serial);
+//pin photorésistance rouge
+#define redSensorPin = A0;
+//sa variable
+int redSensorValue = 0;
 
-    sCmd.addCommand("PING", pingHandler);
+void setup() {
+  Serial.begin(9600);
+  //inscription du nombre de colomnes et de lignes du lcd
+  lcd.begin(16, 2);
+  while (!Serial);
+  sCmd.addCommand("PING", pingHandler);
 }
 
 void loop () {
-    if (Serial.available() > 0)
-        sCmd.readSerial();
+  if (Serial.available() > 0)
+    sCmd.readSerial();
 }
 
 void pingHandler (const char *command) {
-    Serial.println("PONG");
+  Serial.println("PONG");
 }
 
 void echoHandler () {
