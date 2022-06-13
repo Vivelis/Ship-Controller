@@ -7,13 +7,14 @@ LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
 SerialCommand sCmd;
 
 //pin photorésistance rouge
-#define redSensorPin = A0;
+#define redSensorPin A0
 void pingHandler (const char *command);
 
 //sa variable
 int redSensorValue = 0;
 
 void setup() {
+  pinMode(redSensorPin, INPUT);
   Serial.begin(9600);
   //inscription du nombre de colomnes et de lignes du lcd
   lcd.begin(16, 2);
@@ -39,7 +40,9 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("connect app ~");
   sCmd.addCommand("PING", pingHandler);
-  
+  //envoie données capteur photo rouge
+  redSensorValue = analogRead(redSensorPin);
+  Serial.println(redSensorValue);
 }
 
 void loop () {
