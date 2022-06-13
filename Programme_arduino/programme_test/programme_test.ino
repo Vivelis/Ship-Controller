@@ -40,7 +40,10 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("connect app ~");
   sCmd.addCommand("PING", pingHandler);
-  lcd.clear();
+  lcd.clear(); //------> vide le lcd pour se préparer  au reste
+  sCmd.addCommand("/", commandHandler);
+
+  ////////////////test
   //envoie données capteur photo rouge
   redSensorValue = analogRead(redSensorPin);
   Serial.println(redSensorValue);
@@ -71,4 +74,22 @@ void echoHandler () {
     Serial.println(arg);
   else
     Serial.println("nothing to echo");
+}
+void commandHandler () {
+  char *arg;
+  arg = sCmd.next();
+  if (arg != NULL)
+    commande(arg);
+  else
+    Serial.println("ERREUR : argument manquant.");
+}
+
+void commande (char arg) {
+  if (arg = "rouge") {
+    redSensorValue = analogRead(redSensorPin);
+    Serial.println(redSensorValue);
+  }
+  else {
+    Serial.println("ERREUR : mauvais argument.");
+  }
 }
