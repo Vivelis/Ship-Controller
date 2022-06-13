@@ -40,9 +40,13 @@ void setup() {
   lcd.setCursor(0, 1);
   lcd.print("connect app ~");
   sCmd.addCommand("PING", pingHandler);
+  lcd.clear();
   //envoie données capteur photo rouge
   redSensorValue = analogRead(redSensorPin);
   Serial.println(redSensorValue);
+  lcd.setCursor(0, 0);
+  lcd.print("Rouge : ");
+  lcd.print(redSensorValue);
 }
 
 void loop () {
