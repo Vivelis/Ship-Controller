@@ -12,6 +12,7 @@ void pingHandler (const char *command);
 
 //sa variable
 int redSensorValue = 0;
+int newRedSensorValue = 0;
 
 void setup() {
   pinMode(redSensorPin, INPUT);
@@ -55,6 +56,14 @@ void setup() {
 void loop () {
   if (Serial.available() > 0)
     sCmd.readSerial();
+  newRedSensorValue = analogRead(redSensorPin);
+  if (redSensorValue != newRedSensorValue) {
+    redSensorValue = newRedSensorValue;
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("Rouge : ");
+    lcd.print(redSensorValue);
+  }
 }
 
 void pingHandler (const char *command) {
