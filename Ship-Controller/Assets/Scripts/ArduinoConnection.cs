@@ -22,6 +22,12 @@ public class ArduinoConnection : MonoBehaviour
 
     private void Awake()
     {
+        stream = new SerialPort(port, baudRate);
+        if (stream == null)
+        {
+            Debug.LogError(port + "does not exist");
+            Application.Quit();
+        }
         StartThread();
     }
 
@@ -62,7 +68,7 @@ public class ArduinoConnection : MonoBehaviour
         {
             return stream.ReadLine();
         }
-        catch (TimeoutException e)
+        catch
         {
             return null;
         }
@@ -103,6 +109,8 @@ public class ArduinoConnection : MonoBehaviour
     {
         // Opens the connection on the serial port
         stream = new SerialPort(port, baudRate);
+        if (stream is null)
+            return;
         stream.ReadTimeout = timeout;
         stream.Open();
 
@@ -121,5 +129,6 @@ public class ArduinoConnection : MonoBehaviour
             if (result != null)
                 inputQueue.Enqueue(result);
         }
+        stream.Close();
     }
 }
